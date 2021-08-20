@@ -240,6 +240,7 @@ declare -a GIT_REPO_NAMES_ARRAY=(
   "bash-scripts"
   "JSTweener"
   "cgitrepos"
+  "cgit-server-setup"
 )
 for git_repo_name in "${GIT_REPO_NAMES_ARRAY[@]}"; do
     REPO_PATH="/home/valera/dev/public/${git_repo_name}"
