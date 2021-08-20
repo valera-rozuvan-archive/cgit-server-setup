@@ -1,0 +1,39 @@
+[DEFAULT]
+banaction = ufw
+bantime = 1d
+findtime = 1d
+ignoreip = 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 95.164.65.159
+
+[sshd]
+enabled = true
+maxretry = 1
+
+[nginx-php]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 1
+
+[nginx-cgi]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 1
+
+[nginx-aspx]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 1
+
+[nginx-4xx-2]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 1
+
+[nginx-4xx]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 512
