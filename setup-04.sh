@@ -48,19 +48,19 @@ echo "[setup-04] step 3"
 
 sudo rm -rf /etc/cgitrc
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/cgit/cgitrc /etc
-sudo chown root:root /etc/cgitrc
-sudo chgrp root /etc/cgitrc
+sudo chown "${ROOT_USER}":"${ROOT_USER}" /etc/cgitrc
+sudo chgrp "${ROOT_USER}" /etc/cgitrc
 sudo chmod a+r /etc/cgitrc
 sudo chmod u-x /etc/cgitrc
 
 sudo rm -rf /usr/lib/cgit/cgit-css
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/cgit/cgit-css /usr/lib/cgit
-sudo chown -R root:root /usr/lib/cgit/cgit-css
-sudo chgrp -R root /usr/lib/cgit/cgit-css
+sudo chown -R "${ROOT_USER}":"${ROOT_USER}" /usr/lib/cgit/cgit-css
+sudo chgrp -R "${ROOT_USER}" /usr/lib/cgit/cgit-css
 sudo chmod -R a+r /usr/lib/cgit/cgit-css
 sudo chmod a+x /usr/lib/cgit/cgit-css
 
-sudo mv "${ADMIN_USER_HOME_DIR}"/configs/cgit/git2/post_receive_git_hook "${GIT_USER_HOME_DIR}"
+sudo mv "${ADMIN_USER_HOME_DIR}"/configs/cgit/git_user/post_receive_git_hook "${GIT_USER_HOME_DIR}"
 sudo chown "${GIT_USER}":"${GIT_USER}" "${GIT_USER_HOME_DIR}"/post_receive_git_hook
 sudo chgrp "${GIT_USER}" "${GIT_USER_HOME_DIR}"/post_receive_git_hook
 sudo chmod u+x "${GIT_USER_HOME_DIR}"/post_receive_git_hook
@@ -72,8 +72,8 @@ echo "[setup-04] step 4"
 
 sudo rm -rf /etc/lighttpd/lighttpd.conf
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/lighttpd/lighttpd.conf /etc/lighttpd
-sudo chown root:root /etc/lighttpd/lighttpd.conf
-sudo chgrp root /etc/lighttpd/lighttpd.conf
+sudo chown "${ROOT_USER}":"${ROOT_USER}" /etc/lighttpd/lighttpd.conf
+sudo chgrp "${ROOT_USER}" /etc/lighttpd/lighttpd.conf
 sudo chmod a+r /etc/lighttpd/lighttpd.conf
 
 rm -rf "${ADMIN_USER_HOME_DIR}"/configs/lighttpd
@@ -82,14 +82,14 @@ rm -rf "${ADMIN_USER_HOME_DIR}"/configs/lighttpd
 echo "[setup-04] step 5"
 
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/fail2ban/customisation.local /etc/fail2ban/jail.d
-sudo chown root:root /etc/fail2ban/jail.d/customisation.local
-sudo chgrp root /etc/fail2ban/jail.d/customisation.local
+sudo chown "${ROOT_USER}":"${ROOT_USER}" /etc/fail2ban/jail.d/customisation.local
+sudo chgrp "${ROOT_USER}" /etc/fail2ban/jail.d/customisation.local
 sudo chmod a+r /etc/fail2ban/jail.d/customisation.local
 sudo chmod u-x /etc/fail2ban/jail.d/customisation.local
 
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/fail2ban/nginx-* /etc/fail2ban/filter.d
-sudo chown root:root /etc/fail2ban/filter.d/nginx-*
-sudo chgrp root /etc/fail2ban/filter.d/nginx-*
+sudo chown "${ROOT_USER}":"${ROOT_USER}" /etc/fail2ban/filter.d/nginx-*
+sudo chgrp "${ROOT_USER}" /etc/fail2ban/filter.d/nginx-*
 sudo chmod a+r /etc/fail2ban/filter.d/nginx-*
 sudo chmod u-x /etc/fail2ban/filter.d/nginx-*
 
@@ -100,8 +100,8 @@ echo "[setup-04] step 6"
 
 sudo rm -rf /etc/nginx/nginx.conf
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/nginx/nginx.conf /etc/nginx
-sudo chown root:root /etc/nginx/nginx.conf
-sudo chgrp root /etc/nginx/nginx.conf
+sudo chown "${ROOT_USER}":"${ROOT_USER}" /etc/nginx/nginx.conf
+sudo chgrp "${ROOT_USER}" /etc/nginx/nginx.conf
 sudo chmod a+r /etc/nginx/nginx.conf
 sudo chmod u-x /etc/nginx/nginx.conf
 
@@ -112,8 +112,8 @@ echo "[setup-04] step 7"
 
 sudo rm -rf /etc/varnish/default.vcl
 sudo mv "${ADMIN_USER_HOME_DIR}"/configs/varnish/default.vcl /etc/varnish
-sudo chown root:root /etc/varnish/default.vcl
-sudo chgrp root /etc/varnish/default.vcl
+sudo chown "${ROOT_USER}":"${ROOT_USER}" /etc/varnish/default.vcl
+sudo chgrp "${ROOT_USER}" /etc/varnish/default.vcl
 sudo chmod a+r /etc/varnish/default.vcl
 
 # TODO: Need to edit the file "/lib/systemd/system/varnish.service", change the exec line to:
