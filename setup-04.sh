@@ -155,6 +155,7 @@ declare -a GIT_REPO_NAMES_ARRAY=(
   "bash-scripts"
   "JSTweener"
   "cgitrepos"
+  "cgit-server-setup"
 )
 for git_repo_name in "${GIT_REPO_NAMES_ARRAY[@]}"; do
     REPO_PATH="${GIT_USER_HOME_DIR}/${git_repo_name}.git"
