@@ -20,4 +20,5 @@ readme=:readme
 
 enable-http-clone=1
 enable-index-links=1
+
 include=/home/git2/cgitrepos

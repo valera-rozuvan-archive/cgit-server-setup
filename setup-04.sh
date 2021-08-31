@@ -169,6 +169,11 @@ done
 # ----------------------------------------------------------------------------------------------
 echo "[setup-04] step 10"
 
+(crontab -l 2>/dev/null; echo "*/2 * * * * ${ADMIN_USER_HOME_DIR}/update-cgit-repos.sh") | crontab -
+
+# ----------------------------------------------------------------------------------------------
+echo "[setup-04] step 11"
+
 screen -dmS reboot "${ADMIN_USER_HOME_DIR}/reboot-in-5s.sh"
 
 echo -e "\nDone, without errors ;)"

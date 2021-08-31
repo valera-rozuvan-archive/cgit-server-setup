@@ -51,4 +51,7 @@ git for-each-ref \
   --format='%(authordate:iso8601)' \
   > "$agefile"
 
+touch ~/last_git_push
+echo "[$(date)] $(pwd)" >> ~/last_git_push 2>&1
+
 exit 0

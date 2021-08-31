@@ -249,17 +249,6 @@ for git_repo_name in "${GIT_REPO_NAMES_ARRAY[@]}"; do
 done
 
 # ----------------------------------------------------------------------------------------------
-echo "[setup-00] step 10"
-
-ssh \
-    -o ConnectTimeout=10 \
-    -o StrictHostKeyChecking=no \
-    -p 22 \
-    -i ~/.ssh/"${ADMIN_USER_SSH_KEY_HASH}"/ed25519 \
-    $ADMIN_USER@"${SERVER_IP}" \
-    "${ADMIN_USER_HOME_DIR}"/update-cgit-repos.sh
-
-# ----------------------------------------------------------------------------------------------
 printf "[setup-00] [done]\n\n"
 
 echo "Setup of server is complete! You can now connect via SSH:"

@@ -1,23 +1,83 @@
 #!/bin/bash
 
-mkdir -p /home/val/temp/cgitrepos
+set -o errexit
+set -o pipefail
 
-FILE=/home/val/temp/cgitrepos/cgitrepos
-if [[ -f "$FILE" ]]; then
-  echo "$FILE exists."
+function hndl_SIGHUP() {
+  echo "Unfortunately, the script received SIGHUP..."
+  exit 1
+}
+function hndl_SIGINT() {
+  echo "Unfortunately, the script received SIGINT..."
+  exit 1
+}
+function hndl_SIGQUIT() {
+  echo "Unfortunately, the script received SIGQUIT..."
+  exit 1
+}
+function hndl_SIGABRT() {
+  echo "Unfortunately, the script received SIGABRT..."
+  exit 1
+}
+function hndl_SIGTERM() {
+  echo "Unfortunately, the script received SIGTERM..."
+  exit 1
+}
+
+trap hndl_SIGHUP  SIGHUP
+trap hndl_SIGINT  SIGINT
+trap hndl_SIGQUIT SIGQUIT
+trap hndl_SIGABRT SIGABRT
+trap hndl_SIGTERM SIGTERM
+
+# ----------------------------------------------------------------------------------------------
+
+CGITREPOS_REPO="/home/git2/cgitrepos.git"
+CGITREPOS_TEMP_REPO="/home/val/temp/cgitrepos"
+CGITREPOS_FILE="/home/git2/cgitrepos"
+CGITREPOS_TEMP_FILE="${CGITREPOS_TEMP_REPO}/cgitrepos"
+
+# Let's make sure that all necessary parent folders exist. Note the `-p` flag.
+sudo mkdir -p $CGITREPOS_TEMP_REPO
+
+if [[ -f "${CGITREPOS_TEMP_FILE}" ]]; then
+  echo "${CGITREPOS_TEMP_FILE} exists. Now we will check if there are changes in the upstream repo."
+
+  cd $CGITREPOS_TEMP_REPO
+  git fetch
+  HEADHASH=$(git rev-parse HEAD)
+  UPSTREAMHASH=$(git rev-parse master@{upstream})
+
+  if [[ "$HEADHASH" != "$UPSTREAMHASH" ]]; then
+    echo "NOT up to date with the upstream. We will get latest changes, and restart cgit & friends."
+  else
+    echo "We are up to date with the upstream. No action needs to be taken."
+
+    echo "Done!"
+    exit 0
+  fi
 else
-  cd /home/val/temp
-  sudo rm -rf ./cgitrepos
-  sudo git clone /home/git2/cgitrepos.git
+  sudo rm -rf $CGITREPOS_TEMP_REPO
+  sudo git clone $CGITREPOS_REPO $CGITREPOS_TEMP_REPO
 fi
 
-cd /home/val/temp/cgitrepos
+cd $CGITREPOS_TEMP_REPO
 sudo git pull origin master
-sudo cp /home/val/temp/cgitrepos/cgitrepos /home/git2/
-sudo chown git2:git2 /home/git2/cgitrepos
-sudo chgrp git2 /home/git2/cgitrepos
-sudo chmod a+r /home/git2/cgitrepos
-sudo systemctl restart lighttpd && sudo systemctl restart varnish
+
+if [[ -f "${CGITREPOS_TEMP_FILE}" ]]; then
+  sudo rm -rf $CGITREPOS_FILE
+  sudo cp $CGITREPOS_TEMP_FILE /home/git2/
+
+  sudo chown git2:git2 $CGITREPOS_FILE
+  sudo chgrp git2 $CGITREPOS_FILE
+  sudo chmod a+r $CGITREPOS_FILE
+  sudo chmod a-w $CGITREPOS_FILE
+
+  sudo systemctl restart lighttpd
+  sudo systemctl restart varnish
+else
+  echo "The upstream repo is missing the required file. Will not do anything."
+fi
 
 echo "Done!"
 exit 0
