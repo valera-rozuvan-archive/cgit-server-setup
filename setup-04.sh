@@ -169,7 +169,10 @@ done
 # ----------------------------------------------------------------------------------------------
 echo "[setup-04] step 10"
 
-(crontab -l 2>/dev/null; echo "*/2 * * * * ${ADMIN_USER_HOME_DIR}/update-cgit-repos.sh") | crontab -
+# We have `|| true` in the below line, since we don't want the script to silently fail if there are no cronjobs.
+# If there are no cronjobs, `crontab -l` will return an error (exit code 1).
+# Therefore we use `|| true` below.
+(crontab -l 2>/dev/null || true; echo "*/2 * * * * ${ADMIN_USER_HOME_DIR}/update-cgit-repos.sh") | crontab -
 
 # ----------------------------------------------------------------------------------------------
 echo "[setup-04] step 11"

@@ -44,9 +44,9 @@ if [[ -f "${CGITREPOS_TEMP_FILE}" ]]; then
   echo "${CGITREPOS_TEMP_FILE} exists. Now we will check if there are changes in the upstream repo."
 
   cd $CGITREPOS_TEMP_REPO
-  git fetch
-  HEADHASH=$(git rev-parse HEAD)
-  UPSTREAMHASH=$(git rev-parse master@{upstream})
+  sudo git fetch
+  HEADHASH=$(sudo git rev-parse HEAD)
+  UPSTREAMHASH=$(sudo git rev-parse 'master@{upstream}')
 
   if [[ "$HEADHASH" != "$UPSTREAMHASH" ]]; then
     echo "NOT up to date with the upstream. We will get latest changes, and restart cgit & friends."
