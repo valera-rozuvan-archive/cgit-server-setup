@@ -41,7 +41,9 @@ rm -rf "${ADMIN_USER_HOME_DIR}"/cgit_server_cert_bckp
 # ----------------------------------------------------------------------------------------------
 echo "[setup-04] step 2"
 
-mv "${ADMIN_USER_HOME_DIR}"/configs/update-cgit-repos.sh "${ADMIN_USER_HOME_DIR}"
+mv "${ADMIN_USER_HOME_DIR}"/configs/clear-varnish-cache.sh "${ADMIN_USER_HOME_DIR}"
+mv "${ADMIN_USER_HOME_DIR}"/configs/compare-2-files.sh "${ADMIN_USER_HOME_DIR}"
+mv "${ADMIN_USER_HOME_DIR}"/configs/update-cgitrepos-file.sh "${ADMIN_USER_HOME_DIR}"
 
 # ----------------------------------------------------------------------------------------------
 echo "[setup-04] step 3"
@@ -168,14 +170,6 @@ done
 
 # ----------------------------------------------------------------------------------------------
 echo "[setup-04] step 10"
-
-# We have `|| true` in the below line, since we don't want the script to silently fail if there are no cronjobs.
-# If there are no cronjobs, `crontab -l` will return an error (exit code 1).
-# Therefore we use `|| true` below.
-(crontab -l 2>/dev/null || true; echo "*/2 * * * * ${ADMIN_USER_HOME_DIR}/update-cgit-repos.sh") | crontab -
-
-# ----------------------------------------------------------------------------------------------
-echo "[setup-04] step 11"
 
 screen -dmS reboot "${ADMIN_USER_HOME_DIR}/reboot-in-5s.sh"
 

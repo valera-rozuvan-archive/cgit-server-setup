@@ -249,6 +249,37 @@ for git_repo_name in "${GIT_REPO_NAMES_ARRAY[@]}"; do
 done
 
 # ----------------------------------------------------------------------------------------------
+echo "[setup-00] step 10"
+
+admin_script="setup-05"
+
+# ----------------------------------------------------------------------------------------------
+echo "[setup-00]      -> '${admin_script}' upload"
+
+rsync \
+    -rvz \
+    --info=progress2 \
+    --checksum \
+    -e "ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no -p 22 -i ~/.ssh/${ADMIN_USER_SSH_KEY_HASH}/ed25519" \
+    --progress \
+    "${SCRIPT_DIR}"/"${admin_script}" \
+    $ADMIN_USER@"${SERVER_IP}":$ADMIN_USER_HOME_DIR
+
+# ----------------------------------------------------------------------------------------------
+echo "[setup-00]      -> '${admin_script}' exec"
+
+ssh \
+    -o ConnectTimeout=10 \
+    -o StrictHostKeyChecking=no \
+    -p 22 \
+    -i ~/.ssh/"${ADMIN_USER_SSH_KEY_HASH}"/ed25519 \
+    $ADMIN_USER@"${SERVER_IP}" \
+    "chmod u+x ${ADMIN_USER_HOME_DIR}/${admin_script} && ${ADMIN_USER_HOME_DIR}/${admin_script}"
+
+# ----------------------------------------------------------------------------------------------
+echo "[setup-00]      -> '${admin_script}' [done]"
+
+# ----------------------------------------------------------------------------------------------
 printf "[setup-00] [done]\n\n"
 
 echo "Setup of server is complete! You can now connect via SSH:"

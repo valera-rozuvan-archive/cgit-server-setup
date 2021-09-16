@@ -57,6 +57,8 @@ if [[ -f "${CGITREPOS_TEMP_FILE}" ]]; then
     exit 0
   fi
 else
+  echo "${CGITREPOS_TEMP_FILE} DOES NOT exist. Will clone repo from scratch."
+
   sudo rm -rf $CGITREPOS_TEMP_REPO
   sudo git clone $CGITREPOS_REPO $CGITREPOS_TEMP_REPO
 fi
@@ -65,6 +67,8 @@ cd $CGITREPOS_TEMP_REPO
 sudo git pull origin master
 
 if [[ -f "${CGITREPOS_TEMP_FILE}" ]]; then
+  echo "Updating 'cgitrepos' file to the latest version from git repo."
+
   sudo rm -rf $CGITREPOS_FILE
   sudo cp $CGITREPOS_TEMP_FILE /home/git2/
 
@@ -72,9 +76,6 @@ if [[ -f "${CGITREPOS_TEMP_FILE}" ]]; then
   sudo chgrp git2 $CGITREPOS_FILE
   sudo chmod a+r $CGITREPOS_FILE
   sudo chmod a-w $CGITREPOS_FILE
-
-  sudo systemctl restart lighttpd
-  sudo systemctl restart varnish
 else
   echo "The upstream repo is missing the required file. Will not do anything."
 fi
