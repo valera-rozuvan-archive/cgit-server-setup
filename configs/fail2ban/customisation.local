@@ -20,6 +20,12 @@ port = http,https
 logpath = /var/log/nginx/access.log
 maxretry = 1
 
+[nginx-env]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/access.log
+maxretry = 1
+
 [nginx-lua]
 enabled = true
 port = http,https
