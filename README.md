@@ -1,5 +1,11 @@
 # cgit server setup
 
+## wip has moved
+
+Future work on this repository has moved to the monorepo [valera-rozuvan/bash-scripts](https://github.com/valera-rozuvan/bash-scripts). This repo is archived for historic purposes (to preserve commit history). Navigate over to [bash-scripts/cgit-server-setup](https://github.com/valera-rozuvan/bash-scripts/tree/main/cgit-server-setup) to see updates (if any).
+
+## introduction
+
 A bunch of shell scripts and config files to make life easier when setting up a cgit server.
 
 ## getting latest source
